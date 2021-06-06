@@ -34,7 +34,7 @@ User goes to the homepage:
 1. Start a new Next js App using typescript✅
    - create tsconfig.json ✅
    - add baseUrl and no relative paths✅
-   - create relevant pages
+   - create relevant pages✅
      - /
      - /create
      - /v/:slug
@@ -64,7 +64,8 @@ User goes to the homepage:
 6. User can comment other vocabularies/ Rate other vocabularies based on difficulty
 7. User can mark them as favorite
 8. User can search for vocabularies
-9. Lauch on Vercel
-   - add db into next.config.js
-   - deploy app
-   - add env variables to vercel
+9. Do some SEO Stuffs and 404 page
+10. Lauch on Vercel
+    - add db into next.config.js
+    - deploy app
+    - add env variables to vercel

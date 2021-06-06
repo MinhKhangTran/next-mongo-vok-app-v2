@@ -28,6 +28,8 @@
       "@/utils/*": ["utils/*"],
       "@/styles/*": ["styles/*"],
       "@/models/*": ["models/*"],
+      "@/controllers/*": ["controllers/*"],
+      "@/middlewares/*": ["middlewares/*"],
       "@/interfaces/*": ["interfaces/*"]
     }
   },
