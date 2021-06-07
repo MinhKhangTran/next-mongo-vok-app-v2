@@ -5,9 +5,10 @@ const GlobalStyles = createGlobalStyle`
 ::after,
 ::before {
   box-sizing: border-box;
+  margin:0;
+  padding:0;
 }
-/* fonts */
-/* @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Roboto&display=swap'); */
+
 
 html {
   font-size: 100%;
@@ -51,8 +52,8 @@ html {
   --bodyFont: 'Roboto', sans-serif;
   --smallText: 0.7em;
   /* rest of the vars */
-  --backgroundColor: var(--grey-50);
-  --textColor: var(--grey-900);
+  --backgroundColor: var(--primary-50);
+  --textColor: var(--primary-900);
   --borderRadius: 0.25rem;
   --letterSpacing: 1px;
   --transtion: 0.3s ease-in-out all;

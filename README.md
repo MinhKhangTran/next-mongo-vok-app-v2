@@ -48,9 +48,9 @@ User goes to the homepage:
    - create API Route to read vok by ID, delete and update vok✅
      - /api/voks/[id]
 3. Style the pages using Styled Components
-   - initialize Styled Components
-   - Create a Layout with Navigation to navigate through pages
-   - use nprogress
+   - initialize Styled Components✅
+   - Create a Layout with Navigation to navigate through pages✅
+   - use nprogress✅
    - Mobile Responsive
 4. Create Components from the frontend to call these functions
    - fetch voks on the homepage (useSWR)
