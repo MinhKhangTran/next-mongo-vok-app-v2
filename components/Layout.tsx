@@ -22,7 +22,7 @@ const Layout = ({
         <meta name="keywords" content={keywords}></meta>
       </Head>
       <div className="navbar">
-        <nav>
+        <nav className="large">
           <h1>
             <Link href="/">VokApp</Link>
           </h1>
@@ -33,9 +33,28 @@ const Layout = ({
             <li>
               <Link href="/profile">Mein Profil</Link>
             </li>
-            <li>
+
+            <button>
               <Link href="/login">Login</Link>
+            </button>
+          </ul>
+        </nav>
+        {/* Mobile */}
+        <nav className="small">
+          <h1>
+            <Link href="/">VokApp</Link>
+          </h1>
+          <ul>
+            <li>
+              <Link href="/create">Hinzufügen</Link>
             </li>
+            <li>
+              <Link href="/profile">Mein Profil</Link>
+            </li>
+
+            <button>
+              <Link href="/login">Login</Link>
+            </button>
           </ul>
         </nav>
       </div>
@@ -57,6 +76,20 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 0.25rem;
   }
+  button {
+    padding: 0.125rem 1.25rem;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--primary-600);
+    transition: all 0.5s;
+    margin-left: 1rem;
+    a {
+      color: var(--primary-50);
+    }
+    &:hover {
+      background-color: var(--primary-500);
+    }
+  }
   h1 {
     text-shadow: 2px 2px var(--primary-400);
     margin: 0;
@@ -64,6 +97,10 @@ const Wrapper = styled.div`
       color: var(--primary-100);
     }
   }
+  a {
+    color: var(--primary-600);
+  }
+
   ul {
     display: flex;
     justify-content: space-between;
@@ -91,15 +128,29 @@ const Wrapper = styled.div`
           transform: translateX(0%);
         }
       }
-      a {
-        color: var(--primary-600);
-      }
     }
   }
   .children-wrapper {
     width: 90%;
     max-width: 789px;
     margin: 1rem auto;
+  }
+  .small {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .large {
+      display: none;
+    }
+    .small {
+      display: flex;
+      flex-direction: column;
+      ul {
+        margin: 1.25rem 0rem;
+        font-size: 1.25rem;
+      }
+    }
   }
 `;
 
