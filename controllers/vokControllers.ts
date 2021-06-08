@@ -1,7 +1,8 @@
 import catchAsyncErrors from "@/middlewares/catchAsyncErrors";
 import Vok from "@/models/Vok";
 import ErrorHandler from "@/utils/errorHandler";
-import next, { NextApiRequest, NextApiResponse } from "next";
+import { getSession } from "@auth0/nextjs-auth0";
+import { NextApiRequest, NextApiResponse } from "next";
 
 /**
  * create new Vok
@@ -10,8 +11,15 @@ import next, { NextApiRequest, NextApiResponse } from "next";
  */
 
 export const createVok = catchAsyncErrors(
-  async (req: NextApiRequest, res: NextApiResponse) => {
-    const newVok = await Vok.create(req.body);
+  async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    console.log(userId);
+
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
+    const newVok = await Vok.create(req.body, userId);
     res.status(200).json(newVok);
   }
 );

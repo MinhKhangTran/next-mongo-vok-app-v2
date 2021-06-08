@@ -9,6 +9,7 @@ const handler = nextConnect({ onError });
 //connect to db
 connectDB();
 
-handler.post(createVok).get(getVoks);
+handler.post(createVok);
+handler.get(getVoks);
 
 export default handler;

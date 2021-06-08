@@ -15,6 +15,10 @@ const vokSchema: Schema = new Schema(
       trim: true,
       lowercase: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const Layout = ({
   children,
@@ -14,6 +15,9 @@ const Layout = ({
   description?: string;
   keywords?: string;
 }) => {
+  const { user, error, isLoading } = useUser();
+  console.log(user, error, isLoading);
+
   return (
     <Wrapper>
       <Head>
@@ -33,10 +37,17 @@ const Layout = ({
             <li>
               <Link href="/profile">Mein Profil</Link>
             </li>
+            {!user && (
+              <button>
+                <Link href="/api/auth/login">Login</Link>
+              </button>
+            )}
 
-            <button>
-              <Link href="/login">Login</Link>
-            </button>
+            {user && (
+              <button>
+                <Link href="/api/auth/logout">Logout</Link>
+              </button>
+            )}
           </ul>
         </nav>
         {/* Mobile */}
@@ -52,9 +63,17 @@ const Layout = ({
               <Link href="/profile">Mein Profil</Link>
             </li>
 
-            <button>
-              <Link href="/login">Login</Link>
-            </button>
+            {!user && (
+              <button>
+                <Link href="/api/auth/login">Login</Link>
+              </button>
+            )}
+
+            {user && (
+              <button>
+                <Link href="/api/auth/logout">Logout</Link>
+              </button>
+            )}
           </ul>
         </nav>
       </div>

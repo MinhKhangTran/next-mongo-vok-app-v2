@@ -4,4 +4,5 @@ export interface IVok {
   koreanisch: string;
   updatedAt: string;
   createdAt: string;
+  userId: string;
 }
