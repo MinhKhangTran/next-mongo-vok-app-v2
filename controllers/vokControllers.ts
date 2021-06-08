@@ -19,7 +19,7 @@ export const createVok = catchAsyncErrors(
     if (!userId) {
       return next(new ErrorHandler("Nicht angemeldet", 403));
     }
-    const newVok = await Vok.create(req.body, userId);
+    const newVok = await Vok.create(req.body);
     res.status(200).json(newVok);
   }
 );

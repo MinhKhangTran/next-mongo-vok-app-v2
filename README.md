@@ -51,15 +51,15 @@ User goes to the homepage:
    - initialize Styled Components✅
    - Create a Layout with Navigation to navigate through pages✅
    - use nprogress✅
-   - Mobile Responsive
+   - Mobile Responsive✅
 4. Create Components from the frontend to call these functions
-   - fetch voks on the homepage (useSWR)
-   - use react-hook-forms for creating new voks
+   - fetch voks on the homepage (useSWR)✅
+   - use react-hook-forms for creating new voks✅
    - create Icons to delete and update
    - use react-hook-forms for updating an old vok => get voks data in form
-5. Add support for user auth with nextAuth
-   - create a auth0 app as auth system
-   - redirect unlogged user to homepage
+5. Add support for user auth with auth0✅
+   - create a auth0 app as auth system✅
+   - redirect unlogged user to homepage✅
    - if logged in show user profile page with made voks
 6. User can comment other vocabularies/ Rate other vocabularies based on difficulty
 7. User can mark them as favorite

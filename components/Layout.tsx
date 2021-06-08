@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
+import { useRouter } from "next/router";
 
 const Layout = ({
   children,
@@ -16,7 +17,9 @@ const Layout = ({
   keywords?: string;
 }) => {
   const { user, error, isLoading } = useUser();
-  console.log(user, error, isLoading);
+  // console.log(user, error, isLoading);
+  const router = useRouter();
+  // console.log(router.pathname);
 
   return (
     <Wrapper>
@@ -31,20 +34,37 @@ const Layout = ({
             <Link href="/">VokApp</Link>
           </h1>
           <ul>
-            <li>
-              <Link href="/create">Hinzufügen</Link>
-            </li>
-            <li>
-              <Link href="/profile">Mein Profil</Link>
-            </li>
+            {user && (
+              <>
+                <li>
+                  <Link href="/create">
+                    <a
+                      className={router.pathname === "/create" ? "active" : ""}
+                    >
+                      Hinzufügen
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/profile">
+                    <a
+                      className={router.pathname === "/profile" ? "active" : ""}
+                    >
+                      Mein Profil
+                    </a>
+                  </Link>
+                </li>
+              </>
+            )}
+
             {!user && (
-              <button>
+              <button className="auth-btn">
                 <Link href="/api/auth/login">Login</Link>
               </button>
             )}
 
             {user && (
-              <button>
+              <button className="auth-btn">
                 <Link href="/api/auth/logout">Logout</Link>
               </button>
             )}
@@ -56,21 +76,37 @@ const Layout = ({
             <Link href="/">VokApp</Link>
           </h1>
           <ul>
-            <li>
-              <Link href="/create">Hinzufügen</Link>
-            </li>
-            <li>
-              <Link href="/profile">Mein Profil</Link>
-            </li>
+            {user && (
+              <>
+                <li>
+                  <Link href="/create">
+                    <a
+                      className={router.pathname === "/create" ? "active" : ""}
+                    >
+                      Hinzufügen
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/profile">
+                    <a
+                      className={router.pathname === "/profile" ? "active" : ""}
+                    >
+                      Mein Profil
+                    </a>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {!user && (
-              <button>
+              <button className="auth-btn">
                 <Link href="/api/auth/login">Login</Link>
               </button>
             )}
 
             {user && (
-              <button>
+              <button className="auth-btn">
                 <Link href="/api/auth/logout">Logout</Link>
               </button>
             )}
@@ -95,13 +131,13 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 0.25rem;
   }
-  button {
-    padding: 0.125rem 1.25rem;
+  .auth-btn {
+    padding: 0.35rem 1.25rem;
     border-radius: 50px;
     border: none;
     background-color: var(--primary-600);
     transition: all 0.5s;
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
     a {
       color: var(--primary-50);
     }
@@ -118,6 +154,9 @@ const Wrapper = styled.div`
   }
   a {
     color: var(--primary-600);
+  }
+  .active {
+    color: var(--primary-50);
   }
 
   ul {

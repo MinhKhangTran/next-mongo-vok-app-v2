@@ -3,31 +3,35 @@ import Title from "@/components/Title";
 import useSWR from "swr";
 import { IVok } from "@/interfaces/Vok";
 import styled from "styled-components";
+import { useUser } from "@auth0/nextjs-auth0";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Home() {
   const { data, error } = useSWR("/api/voks");
-  console.log(data, error);
+  // console.log(data, error);
+  const { user } = useUser();
+  console.log(user);
 
   if (error) return <Layout>Es gab ein Fehler</Layout>;
   if (!data) return <Layout>Lädt ...</Layout>;
   return (
     <Layout>
-      <Title>Vokabelliste</Title>
       <StyledTable>
         <tr>
           <th>Koreanisch</th>
           <th>Deutsch</th>
           <th>Datum</th>
-          <th>User</th>
         </tr>
         {data.map((vok: IVok) => {
           return (
-            <tr key={vok._id}>
-              <td>{vok.koreanisch}</td>
-              <td>{vok.deutsch}</td>
-              <td>{new Date(vok.updatedAt).toLocaleDateString("de-DE")}</td>
-              <td>MKT</td>
-            </tr>
+            <Link href={`/v/${vok._id}`}>
+              <tr key={vok._id}>
+                <td>{vok.koreanisch}</td>
+                <td>{vok.deutsch}</td>
+                <td>{new Date(vok.updatedAt).toLocaleDateString("de-DE")}</td>
+              </tr>
+            </Link>
           );
         })}
       </StyledTable>
@@ -38,6 +42,7 @@ export default function Home() {
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
+  margin-top: 2rem;
   th,
   td {
     border: 1px solid var(--primary-700);
@@ -59,5 +64,9 @@ const StyledTable = styled.table`
   }
   tr:hover {
     background: var(--primary-200);
+  }
+  .settings {
+    display: flex;
+    justify-content: space-between;
   }
 `;
