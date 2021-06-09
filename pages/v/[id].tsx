@@ -1,4 +1,4 @@
-import Card from "@/components/Card";
+// import Card from "@/components/Card";
 import Layout from "@/components/Layout";
 import VokForm from "@/components/VokForm";
 import { IVok } from "@/interfaces/Vok";

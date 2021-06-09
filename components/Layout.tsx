@@ -16,7 +16,7 @@ const Layout = ({
   description?: string;
   keywords?: string;
 }) => {
-  const { user, error, isLoading } = useUser();
+  const { user } = useUser();
   // console.log(user, error, isLoading);
   const router = useRouter();
   // console.log(router.pathname);

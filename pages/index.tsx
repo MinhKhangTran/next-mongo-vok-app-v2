@@ -1,13 +1,13 @@
 import Layout from "@/components/Layout";
-import Title from "@/components/Title";
+// import Title from "@/components/Title";
 import useSWR from "swr";
 import { IVok } from "@/interfaces/Vok";
 import styled from "styled-components";
 import { useUser } from "@auth0/nextjs-auth0";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import Link from "next/link";
+// import { FaTrash, FaEdit } from "react-icons/fa";
+// import Link from "next/link";
 import Card from "@/components/Card";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+// import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export default function Home() {
   const { data, error } = useSWR("/api/voks");

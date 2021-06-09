@@ -11,8 +11,8 @@ User goes to the homepage:
 
 # Admin
 
-- Admin can CRUD all vocabularies
-- Admin can CRUD all Users
+- ~~Admin can CRUD all vocabularies~~
+- ~~Admin can CRUD all Users~~
 
 # Tech Stack behind
 
