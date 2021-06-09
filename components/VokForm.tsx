@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { mutate } from "swr";
 
 const VokForm = ({ vok }: { vok?: IVok }) => {
   const { user } = useUser();
@@ -55,6 +56,7 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
       //   console.log(data);
 
       if (data) {
+        mutate(`/api/voks/${vok?._id}`);
         router.push("/");
       }
     } catch (error) {
@@ -86,11 +88,6 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
       <button disabled={isSubmitting} type="submit" className="btn">
         {vok ? "Ändern" : "Hinzufügen"}
       </button>
-      {vok && (
-        <button type="button" className="löschen">
-          Löschen
-        </button>
-      )}
     </StyledForm>
   );
 };
@@ -131,23 +128,6 @@ const StyledForm = styled.form`
     cursor: pointer;
     &:hover {
       background-color: var(--primary-500);
-    }
-  }
-  .löschen {
-    padding: 0.25rem 1.25rem;
-    border-radius: 4px;
-    border: none;
-    font-size: 1.3rem;
-    margin-top: 1rem;
-    margin-left: 2rem;
-    box-shadow: inset 0px 0px 0px 3px var(--red-dark);
-    color: var(--red-dark);
-    transition: all 0.5s;
-    cursor: pointer;
-    background: transparent;
-    &:hover {
-      background-color: var(--red-dark);
-      color: var(--red-light);
     }
   }
 `;

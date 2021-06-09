@@ -13,7 +13,7 @@ export default function Home() {
   const { data, error } = useSWR("/api/voks");
   // console.log(data, error);
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
 
   if (error) return <Layout>Es gab ein Fehler</Layout>;
   if (!data) return <Layout>Lädt ...</Layout>;
@@ -32,6 +32,7 @@ export default function Home() {
                   key={vok._id}
                   koreanisch={vok.koreanisch}
                   deutsch={vok.deutsch}
+                  _id={vok._id}
                 />
               );
             })}

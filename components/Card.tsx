@@ -1,13 +1,32 @@
 import styled from "styled-components";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import Link from "next/link";
+import axios from "axios";
+
+import { mutate } from "swr";
 
 const Card = ({
   koreanisch,
   deutsch,
+  _id,
 }: {
   koreanisch?: string;
   deutsch?: string;
+  _id?: string;
 }) => {
+  const deleteVok = async (_id: string) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3000/api/voks/${_id}`
+      );
+      //   console.log(data);
+      if (data) {
+        mutate("/api/voks");
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   return (
     <>
       <StyledCard>
@@ -21,10 +40,17 @@ const Card = ({
         </div>
       </StyledCard>
       <StyledButtonGroup>
-        <button className="edit">
-          <FaEdit /> Ändern
-        </button>
-        <button className="löschen">
+        <Link href={`/v/${_id}`}>
+          <button className="edit">
+            <FaEdit /> Ändern
+          </button>
+        </Link>
+        <button
+          onClick={() => {
+            deleteVok(_id!);
+          }}
+          className="löschen"
+        >
           <FaTrash /> Löschen
         </button>
       </StyledButtonGroup>
