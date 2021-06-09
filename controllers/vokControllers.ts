@@ -36,7 +36,7 @@ export const getVoks = catchAsyncErrors(
     const session = getSession(req, res);
     const userId = session?.user.sub;
     // console.log(userId);
-    console.log(req.query);
+    // console.log(req.query);
 
     if (!userId) {
       return next(new ErrorHandler("Nicht angemeldet", 403));
