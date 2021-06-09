@@ -53,17 +53,17 @@ User goes to the homepage:
    - use nprogress✅
    - Mobile Responsive✅
 4. Create Components from the frontend to call these functions
-   - fetch voks on the homepage (useSWR)✅
+   - fetch users voks on the homepage (useSWR)✅
    - use react-hook-forms for creating new voks✅
    - create Icons to delete and update
    - use react-hook-forms for updating an old vok => get voks data in form
 5. Add support for user auth with auth0✅
    - create a auth0 app as auth system✅
    - redirect unlogged user to homepage✅
-   - if logged in show user profile page with made voks
+   - if logged in show user profile page with made voks✅
 6. User can comment other vocabularies/ Rate other vocabularies based on difficulty
 7. User can mark them as favorite
-8. User can search for vocabularies
+8. User can search for vocabularies and filter
 9. Do some SEO Stuffs and 404 page
 10. Lauch on Vercel
     - add db into next.config.js
