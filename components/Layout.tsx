@@ -45,7 +45,7 @@ const Layout = ({
                     </a>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/profile">
                     <a
                       className={router.pathname === "/profile" ? "active" : ""}
@@ -53,7 +53,7 @@ const Layout = ({
                       Mein Profil
                     </a>
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
 
@@ -87,7 +87,7 @@ const Layout = ({
                     </a>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/profile">
                     <a
                       className={router.pathname === "/profile" ? "active" : ""}
@@ -95,7 +95,7 @@ const Layout = ({
                       Mein Profil
                     </a>
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
 

@@ -1,3 +1,4 @@
+import { IVok } from "@/interfaces/Vok";
 import catchAsyncErrors from "@/middlewares/catchAsyncErrors";
 import Vok from "@/models/Vok";
 import ErrorHandler from "@/utils/errorHandler";
@@ -14,7 +15,7 @@ export const createVok = catchAsyncErrors(
   async (req: NextApiRequest, res: NextApiResponse, next: any) => {
     const session = getSession(req, res);
     const userId = session?.user.sub;
-    console.log(userId);
+    // console.log(userId);
 
     if (!userId) {
       return next(new ErrorHandler("Nicht angemeldet", 403));
@@ -26,12 +27,19 @@ export const createVok = catchAsyncErrors(
 /**
  * get all Voks
  * GET /api/voks
- * PUBLIC
+ * PRIVATE
  */
 
 export const getVoks = catchAsyncErrors(
-  async (req: NextApiRequest, res: NextApiResponse) => {
-    const voks = await Vok.find({}).sort({ createdAt: -1 });
+  async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    // console.log(userId);
+
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
+    const voks = await Vok.find({ userId }).sort({ createdAt: -1 });
     res.status(200).json(voks);
   }
 );
@@ -43,8 +51,16 @@ export const getVoks = catchAsyncErrors(
  */
 
 export const getVokById = catchAsyncErrors(
-  async (req: NextApiRequest, res: NextApiResponse) => {
+  async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    // console.log(userId);
+
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
     const vok = await Vok.findById(req.query.id);
+    // .select("-userId");
     res.status(200).json(vok);
   }
 );
@@ -56,9 +72,16 @@ export const getVokById = catchAsyncErrors(
 
 export const updateVok = catchAsyncErrors(
   async (req: NextApiRequest, res: NextApiResponse, next: any) => {
-    const vok = await Vok.findById(req.query.id);
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    // console.log(userId);
 
-    if (!vok) {
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
+    const vok = (await Vok.findById(req.query.id)) as IVok;
+
+    if (!vok || vok.userId !== userId) {
       return next(new ErrorHandler("Diese Vokabel gibt es nicht", 404));
     }
 
@@ -68,7 +91,7 @@ export const updateVok = catchAsyncErrors(
 
     const updatedVok = await Vok.findByIdAndUpdate(
       req.query.id,
-      { koreanisch: req.body.koreanisch, deutsch: req.body.deutsch },
+      { koreanisch: req.body.koreanisch, deutsch: req.body.deutsch, userId },
       { new: true }
     );
     res.status(200).json(updatedVok);

@@ -39,8 +39,30 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
       console.log(error.response);
     }
   };
+
+  const updateVok = async (data: IVok) => {
+    const { koreanisch, deutsch } = data;
+    const userId = user?.sub;
+    try {
+      const { data } = await axios.put(
+        `http://localhost:3000/api/voks/${vok?._id}`,
+        {
+          koreanisch,
+          deutsch,
+          userId,
+        }
+      );
+      //   console.log(data);
+
+      if (data) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   return (
-    <StyledForm onSubmit={handleSubmit(createVok)}>
+    <StyledForm onSubmit={handleSubmit(vok ? updateVok : createVok)}>
       <div className="form-control">
         <label htmlFor="korean">Koreanisch</label>
         <input
@@ -61,9 +83,14 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
         />
         {errors.deutsch && <p>{errors.deutsch.message}</p>}
       </div>
-      <button type="submit" className="btn">
-        Hinzufügen
+      <button disabled={isSubmitting} type="submit" className="btn">
+        {vok ? "Ändern" : "Hinzufügen"}
       </button>
+      {vok && (
+        <button type="button" className="löschen">
+          Löschen
+        </button>
+      )}
     </StyledForm>
   );
 };
@@ -104,6 +131,23 @@ const StyledForm = styled.form`
     cursor: pointer;
     &:hover {
       background-color: var(--primary-500);
+    }
+  }
+  .löschen {
+    padding: 0.25rem 1.25rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    box-shadow: inset 0px 0px 0px 3px var(--red-dark);
+    color: var(--red-dark);
+    transition: all 0.5s;
+    cursor: pointer;
+    background: transparent;
+    &:hover {
+      background-color: var(--red-dark);
+      color: var(--red-light);
     }
   }
 `;
