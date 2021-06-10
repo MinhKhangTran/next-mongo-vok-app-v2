@@ -63,9 +63,9 @@ User goes to the homepage:
    - if logged in show user profile page with made voks✅
 6. User can comment other vocabularies/ Rate other vocabularies based on difficulty
 7. User can mark them as favorite
-8. User can search for vocabularies ~~and filter~~
+8. User can search for vocabularies ~~and filter~~ ✅
 9. Do some SEO Stuffs and 404 page
-10. Lauch on Vercel
-    - add db into next.config.js
-    - deploy app
-    - add env variables to vercel
+10. Lauch on Vercel ✅
+    - add db into next.config.js ✅
+    - deploy app ✅
+    - add env variables to vercel ✅
