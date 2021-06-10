@@ -7,7 +7,7 @@ class APIFeatures {
   search() {
     const vok = this.queryStr.vok
       ? {
-          koreanisch: {
+          deutsch: {
             $regex: this.queryStr.vok,
           },
         }

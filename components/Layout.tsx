@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
+import Search from "./Search";
 
 const Layout = ({
   children,
@@ -33,6 +34,8 @@ const Layout = ({
           <h1>
             <Link href="/">VokApp</Link>
           </h1>
+          {user && <Search />}
+
           <ul>
             {user && (
               <>
@@ -45,15 +48,6 @@ const Layout = ({
                     </a>
                   </Link>
                 </li>
-                {/* <li>
-                  <Link href="/profile">
-                    <a
-                      className={router.pathname === "/profile" ? "active" : ""}
-                    >
-                      Mein Profil
-                    </a>
-                  </Link>
-                </li> */}
               </>
             )}
 
@@ -78,6 +72,7 @@ const Layout = ({
           <ul>
             {user && (
               <>
+                <Search />
                 <li>
                   <Link href="/create">
                     <a
@@ -87,15 +82,6 @@ const Layout = ({
                     </a>
                   </Link>
                 </li>
-                {/* <li>
-                  <Link href="/profile">
-                    <a
-                      className={router.pathname === "/profile" ? "active" : ""}
-                    >
-                      Mein Profil
-                    </a>
-                  </Link>
-                </li> */}
               </>
             )}
 

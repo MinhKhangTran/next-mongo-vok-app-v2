@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { mutate } from "swr";
+import { NEXT_URL } from "@/config/index";
+import { StyledInput } from "./Input";
 
 const VokForm = ({ vok }: { vok?: IVok }) => {
   const { user } = useUser();
@@ -26,7 +28,7 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
     const { koreanisch, deutsch } = data;
     const userId = user?.sub;
     try {
-      const { data } = await axios.post("http://localhost:3000/api/voks", {
+      const { data } = await axios.post(`${NEXT_URL}/api/voks`, {
         koreanisch,
         deutsch,
         userId,
@@ -45,14 +47,11 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
     const { koreanisch, deutsch } = data;
     const userId = user?.sub;
     try {
-      const { data } = await axios.put(
-        `http://localhost:3000/api/voks/${vok?._id}`,
-        {
-          koreanisch,
-          deutsch,
-          userId,
-        }
-      );
+      const { data } = await axios.put(`${NEXT_URL}/api/voks/${vok?._id}`, {
+        koreanisch,
+        deutsch,
+        userId,
+      });
       //   console.log(data);
 
       if (data) {
@@ -67,7 +66,7 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
     <StyledForm onSubmit={handleSubmit(vok ? updateVok : createVok)}>
       <div className="form-control">
         <label htmlFor="korean">Koreanisch</label>
-        <input
+        <StyledInput
           id="korean"
           type="text"
           placeholder="Koreanisch"
@@ -77,7 +76,7 @@ const VokForm = ({ vok }: { vok?: IVok }) => {
       </div>
       <div className="form-control">
         <label htmlFor="german">Deutsch</label>
-        <input
+        <StyledInput
           id="german"
           type="text"
           placeholder="Deutsch"
@@ -109,13 +108,7 @@ const StyledForm = styled.form`
     color: var(--primary-400);
     font-size: 1.25rem;
   }
-  input {
-    padding: 5px 10px;
-    border-radius: 50px;
-    border: 2px solid var(--primary-400);
-    color: var(--primary-400);
-    font-size: 1.15rem;
-  }
+
   .btn {
     padding: 0.25rem 1.25rem;
     border-radius: 4px;

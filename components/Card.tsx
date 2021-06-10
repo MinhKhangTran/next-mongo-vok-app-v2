@@ -4,6 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 
 import { mutate } from "swr";
+import { NEXT_URL } from "@/config/index";
 
 const Card = ({
   koreanisch,
@@ -16,9 +17,7 @@ const Card = ({
 }) => {
   const deleteVok = async (_id: string) => {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:3000/api/voks/${_id}`
-      );
+      const { data } = await axios.delete(`${NEXT_URL}/api/voks/${_id}`);
       //   console.log(data);
       if (data) {
         mutate("/api/voks");
