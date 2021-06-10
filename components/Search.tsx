@@ -1,7 +1,5 @@
-import { IVok } from "@/interfaces/Vok";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { NEXT_URL } from "../config";
 import { StyledInput } from "./Input";
 import SearchResult from "./SearchResult";

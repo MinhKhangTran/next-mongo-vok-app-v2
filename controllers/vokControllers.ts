@@ -52,6 +52,30 @@ export const getVoks = catchAsyncErrors(
     res.status(200).json(voks);
   }
 );
+/**
+ * get favorite Voks
+ * GET /api/voks/favorite
+ * PRIVATE
+ */
+
+export const getFavorite = catchAsyncErrors(
+  async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    // console.log(userId);
+    // console.log(req.query);
+
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
+    // const voks = await Vok.find({ userId }).sort({ createdAt: -1 });
+    const voks = await Vok.find({ userId, favorite: true }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(voks);
+  }
+);
 
 /**
  * get Vok by ID

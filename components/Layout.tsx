@@ -48,6 +48,17 @@ const Layout = ({
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href="/favorite">
+                    <a
+                      className={
+                        router.pathname === "/favorite" ? "active" : ""
+                      }
+                    >
+                      Favoriten
+                    </a>
+                  </Link>
+                </li>
               </>
             )}
 
@@ -79,6 +90,17 @@ const Layout = ({
                       className={router.pathname === "/create" ? "active" : ""}
                     >
                       Hinzufügen
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/favorite">
+                    <a
+                      className={
+                        router.pathname === "/favorite" ? "active" : ""
+                      }
+                    >
+                      Favoriten
                     </a>
                   </Link>
                 </li>

@@ -25,6 +25,7 @@ const Card = ({
       //   console.log(data);
       if (data) {
         mutate("/api/voks");
+        mutate("/api/favorite");
       }
     } catch (error) {
       console.log(error.response);
@@ -36,6 +37,7 @@ const Card = ({
       //   console.log(data);
       if (data) {
         mutate("/api/voks");
+        mutate("/api/favorite");
       }
     } catch (error) {
       console.log(error.response);
