@@ -1,5 +1,4 @@
-import React from "react";
-import styled, { StyledFunction } from "styled-components";
+import styled from "styled-components";
 
 interface StyledProps {
   eckig?: boolean;

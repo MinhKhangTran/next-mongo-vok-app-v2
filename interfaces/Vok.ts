@@ -5,4 +5,5 @@ export interface IVok {
   updatedAt: string;
   createdAt: string;
   userId: string;
+  favorite: boolean;
 }

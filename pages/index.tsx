@@ -33,6 +33,7 @@ export default function Home() {
                   koreanisch={vok.koreanisch}
                   deutsch={vok.deutsch}
                   _id={vok._id}
+                  favorite={vok.favorite}
                 />
               );
             })}

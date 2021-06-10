@@ -47,7 +47,7 @@ export const getVoks = catchAsyncErrors(
       req.query
     ).search();
     const voks = await apiFeatures.query;
-    console.log(voks);
+    // console.log(voks);
 
     res.status(200).json(voks);
   }
@@ -120,5 +120,46 @@ export const deleteVok = catchAsyncErrors(
     }
     await Vok.findByIdAndDelete(req.query.id);
     res.status(200).json({ msg: "Vok gelöscht" });
+  }
+);
+
+/**
+ * Update Favorite State at vok
+ * UPDATE /api/voks/favorite/[id]
+ * PRIVATE OWNER
+ */
+export const updateFavorite = catchAsyncErrors(
+  async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+    const session = getSession(req, res);
+    const userId = session?.user.sub;
+    // console.log(userId);
+
+    if (!userId) {
+      return next(new ErrorHandler("Nicht angemeldet", 403));
+    }
+    const vok = (await Vok.findById(req.query.id)) as IVok;
+
+    if (!vok || vok.userId !== userId) {
+      return next(new ErrorHandler("Diese Vokabel gibt es nicht", 404));
+    }
+    let status;
+
+    if (vok) {
+      if (vok.favorite === true) {
+        status = false;
+      } else {
+        status = true;
+      }
+    }
+    // console.log(req.query.id, status);
+
+    const updatedVok = await Vok.findByIdAndUpdate(
+      req.query.id,
+      { favorite: status },
+      { new: true }
+    );
+    // console.log(JSON.stringify(updateVok));
+
+    res.status(200).json(updatedVok);
   }
 );

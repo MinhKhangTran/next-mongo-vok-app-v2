@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import axios from "axios";
 
@@ -10,14 +10,29 @@ const Card = ({
   koreanisch,
   deutsch,
   _id,
+  favorite,
 }: {
   koreanisch?: string;
   deutsch?: string;
   _id?: string;
+  favorite?: boolean;
 }) => {
+  console.log(favorite);
+
   const deleteVok = async (_id: string) => {
     try {
       const { data } = await axios.delete(`${NEXT_URL}/api/voks/${_id}`);
+      //   console.log(data);
+      if (data) {
+        mutate("/api/voks");
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const toggleFavorite = async (_id: string) => {
+    try {
+      const { data } = await axios.put(`${NEXT_URL}/api/voks/favorite/${_id}`);
       //   console.log(data);
       if (data) {
         mutate("/api/voks");
@@ -39,6 +54,15 @@ const Card = ({
         </div>
       </StyledCard>
       <StyledButtonGroup>
+        <button
+          onClick={() => {
+            toggleFavorite(_id!);
+          }}
+          className="herz"
+        >
+          {/* <FaHeart /> */}
+          {favorite ? <FaHeart /> : <FaRegHeart />}
+        </button>
         <Link href={`/v/${_id}`}>
           <button className="edit">
             <FaEdit /> Ändern
@@ -92,13 +116,15 @@ const StyledButtonGroup = styled.div`
   width: 90%;
   max-width: 500px;
   margin: 0rem auto 1rem;
+  display: flex;
+  height: 50%;
   .edit {
-    padding: 0.25rem 1.25rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     border: none;
     font-size: 1rem;
     margin-top: 1rem;
-
+    margin-left: 1rem;
     color: var(--green-light);
     transition: all 0.5s;
     cursor: pointer;
@@ -109,7 +135,7 @@ const StyledButtonGroup = styled.div`
     }
   }
   .löschen {
-    padding: 0.25rem 1.25rem;
+    padding: 0.125rem 0.25rem;
     border-radius: 4px;
     border: none;
     font-size: 1rem;
@@ -124,6 +150,25 @@ const StyledButtonGroup = styled.div`
       background-color: var(--red-dark);
       color: var(--red-light);
     }
+  }
+  .herz {
+    padding: 0.25rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+
+    transition: all 0.5s;
+    cursor: pointer;
+
+    background-color: var(--red-light);
+    color: var(--red-dark);
+    &:hover {
+      box-shadow: var(--shadow-4);
+    }
+  }
+  @media (max-width: 768px) {
+    height: 75%;
   }
 `;
 
