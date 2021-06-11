@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 const SearchResult = ({ results }: { results: IVok[] }) => {
-  console.log(results);
+  // console.log(results);
 
   if (results.length === 0) return <></>;
   return (

@@ -5,6 +5,7 @@ import APIFeatures from "@/utils/apiFeatures";
 import ErrorHandler from "@/utils/errorHandler";
 import { getSession } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
+import { resPerPage } from "../config";
 
 /**
  * create new Vok
@@ -46,10 +47,17 @@ export const getVoks = catchAsyncErrors(
       Vok.find({ userId }).sort({ createdAt: -1 }),
       req.query
     ).search();
-    const voks = await apiFeatures.query;
-    // console.log(voks);
+    let voks = await apiFeatures.query;
 
-    res.status(200).json(voks);
+    //paginate
+    //get total count from db
+    const vokCount = await voks.length;
+    apiFeatures.paginate(resPerPage);
+    //limit entries basend on which site the user is on
+    voks = await apiFeatures.query;
+    // console.log({ voks, vokCount, resPerPage });
+
+    res.status(200).json({ voks, vokCount, resPerPage });
   }
 );
 /**

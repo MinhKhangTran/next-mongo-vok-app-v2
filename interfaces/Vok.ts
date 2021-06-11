@@ -7,3 +7,9 @@ export interface IVok {
   userId: string;
   favorite: boolean;
 }
+
+export interface IPaginateVok {
+  voks: IVok[];
+  vokCount: number;
+  resPerPage: number;
+}

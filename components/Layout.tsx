@@ -80,10 +80,10 @@ const Layout = ({
           <h1>
             <Link href="/">VokApp</Link>
           </h1>
+          {user && <Search />}
           <ul>
             {user && (
               <>
-                <Search />
                 <li>
                   <Link href="/create">
                     <a

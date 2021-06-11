@@ -17,7 +17,7 @@ const Card = ({
   _id?: string;
   favorite?: boolean;
 }) => {
-  console.log(favorite);
+  // console.log(favorite);
 
   const deleteVok = async (_id: string) => {
     try {
