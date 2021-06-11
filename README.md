@@ -4,10 +4,10 @@
 
 User goes to the homepage:
 
-- User sees a list of vocabularies
+- User sees a list of his vocabularies
 - to add one user can sign in or sign up
 - once signed in the user can create a new vocabulary or edit an old one (the vocabulary must be from the user)
-- User can go to his profile an see his created vocabularies
+- User can see his favorite vocabularies
 
 # Admin
 
@@ -20,13 +20,11 @@ User goes to the homepage:
 - typescript
 - axios
 - nprogress
-- moment/ react-moment
 - Styled-components
-- React Context
 - SWR
 - react-hook-forms
 - MongoDB / mongoose
-- NextAuth.js
+- Auth0
 - Vercel
 
 # Milestones
@@ -65,7 +63,7 @@ User goes to the homepage:
 7. User can mark them as favorite ✅
 8. User can search for vocabularies ~~and filter~~ ✅
 9. Pagination✅
-10. Do some SEO Stuffs and 404 page
+10. Do some SEO Stuffs and 404 page✅
 11. Lauch on Vercel ✅
     - add db into next.config.js ✅
     - deploy app ✅

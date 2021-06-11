@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { NEXT_URL } from "../config";
 import { StyledInput } from "./Input";
 import SearchResult from "./SearchResult";
+import { useRouter } from "next/router";
 
 const Search = () => {
   const [searchData, setSearchData] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const router = useRouter();
+  const { page } = router.query;
 
   //useeffect with searchData as dependency.
   //Every time User tapped on the search bar, we make a get
@@ -19,7 +22,7 @@ const Search = () => {
         setSearchResult([]);
       } else {
         const { data } = await axios.get(
-          `${NEXT_URL}/api/voks?vok=${searchData}`
+          `${NEXT_URL}/api/voks?page=${page}&vok=${searchData}`
         );
         setSearchResult(data);
       }
@@ -37,7 +40,10 @@ const Search = () => {
           setSearchData(e.target.value);
         }}
       ></StyledInput>
-      <SearchResult results={searchResult} />
+      <SearchResult
+        //@ts-expect-error
+        results={searchResult}
+      />
     </section>
   );
 };

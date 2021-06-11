@@ -1,28 +1,30 @@
-import { IVok } from "@/interfaces/Vok";
+import { IPaginateVok } from "@/interfaces/Vok";
 import Link from "next/link";
 import styled from "styled-components";
 
-const SearchResult = ({ results }: { results: IVok[] }) => {
+const SearchResult = ({ results }: { results: IPaginateVok }) => {
   // console.log(results);
 
-  if (results.length === 0) return <></>;
-  return (
-    <StyledSearchResult>
-      <h6>Ergebnisse:</h6>
-      {results.map((result) => {
-        return (
-          <div>
-            <Link href={`/v/${result._id}`}>
-              <div className="result-bar">
-                <p>{result.deutsch}</p>
-                <p className="koreanisch">{result.koreanisch}</p>
+  if (results.vokCount > 0)
+    return (
+      <StyledSearchResult>
+        <h6>Ergebnisse:</h6>
+        {results.vokCount > 0 &&
+          results.voks.map((result) => {
+            return (
+              <div>
+                <Link href={`/v/${result._id}`}>
+                  <div className="result-bar">
+                    <p>{result.deutsch}</p>
+                    <p className="koreanisch">{result.koreanisch}</p>
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-        );
-      })}
-    </StyledSearchResult>
-  );
+            );
+          })}
+      </StyledSearchResult>
+    );
+  else return <></>;
 };
 
 const StyledSearchResult = styled.div`
