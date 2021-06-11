@@ -7,6 +7,7 @@ import Card from "@/components/Card";
 import { resPerPage } from "../config";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const { user } = useUser();
@@ -42,7 +43,12 @@ export default function Home() {
   if (!data) return <Layout>Lädt ...</Layout>;
 
   if (user && data.vokCount === 0) {
-    return <Layout>Es gibt noch keine Vokabeln</Layout>;
+    return (
+      <Layout>
+        Du hast noch keine Vokabeln. <Link href="/create">Hier klicken</Link> um
+        welche zu erstellen
+      </Layout>
+    );
   }
   if (user) {
     return (
@@ -57,6 +63,7 @@ export default function Home() {
                   deutsch={vok.deutsch}
                   _id={vok._id}
                   favorite={vok.favorite}
+                  page={page}
                 />
               );
             })}
@@ -106,7 +113,7 @@ export default function Home() {
   }
   return <Layout>Willkommen um neue Vokabeln einzufügen bitte anmelden</Layout>;
 }
-const StyledGrid = styled.div`
+export const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
@@ -116,7 +123,7 @@ const StyledGrid = styled.div`
   }
 `;
 
-const StyledPagination = styled.section`
+export const StyledPagination = styled.section`
   margin-left: 0.75rem;
   button {
     padding: 0.5rem;

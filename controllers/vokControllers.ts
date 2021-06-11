@@ -77,11 +77,26 @@ export const getFavorite = catchAsyncErrors(
       return next(new ErrorHandler("Nicht angemeldet", 403));
     }
     // const voks = await Vok.find({ userId }).sort({ createdAt: -1 });
-    const voks = await Vok.find({ userId, favorite: true }).sort({
-      createdAt: -1,
-    });
+    // let voks = await Vok.find({ userId, favorite: true }).sort({
+    //   createdAt: -1,
+    // });
 
-    res.status(200).json(voks);
+    const apiFeatures = new APIFeatures(
+      Vok.find({ userId, favorite: true }).sort({
+        createdAt: -1,
+      }),
+      req.query
+    );
+    let voks = await apiFeatures.query;
+    //paginate
+    //get total count from db
+    const vokCount = await voks.length;
+    apiFeatures.paginate(resPerPage);
+    //limit entries basend on which site the user is on
+    voks = await apiFeatures.query;
+    console.log({ voks, vokCount, resPerPage });
+
+    res.status(200).json({ voks, vokCount, resPerPage });
   }
 );
 

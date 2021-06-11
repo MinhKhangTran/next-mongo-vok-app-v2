@@ -11,11 +11,13 @@ const Card = ({
   deutsch,
   _id,
   favorite,
+  page,
 }: {
   koreanisch?: string;
   deutsch?: string;
   _id?: string;
   favorite?: boolean;
+  page?: any;
 }) => {
   // console.log(favorite);
 
@@ -24,8 +26,12 @@ const Card = ({
       const { data } = await axios.delete(`${NEXT_URL}/api/voks/${_id}`);
       //   console.log(data);
       if (data) {
-        mutate("/api/voks");
-        mutate("/api/favorite");
+        mutate(page ? `/api/voks/?page=${page}` : `/api/voks/?page=1`);
+        mutate(
+          page
+            ? `/api/voks/favorite/?page=${page}`
+            : `/api/voks/favorite/?page=1`
+        );
       }
     } catch (error) {
       console.log(error.response);
@@ -36,8 +42,12 @@ const Card = ({
       const { data } = await axios.put(`${NEXT_URL}/api/voks/favorite/${_id}`);
       //   console.log(data);
       if (data) {
-        mutate("/api/voks");
-        mutate("/api/favorite");
+        mutate(page ? `/api/voks/?page=${page}` : `/api/voks/?page=1`);
+        mutate(
+          page
+            ? `/api/voks/favorite/?page=${page}`
+            : `/api/voks/favorite/?page=1`
+        );
       }
     } catch (error) {
       console.log(error.response);

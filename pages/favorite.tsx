@@ -1,32 +1,60 @@
 import Layout from "@/components/Layout";
-// import Title from "@/components/Title";
 import useSWR from "swr";
-import { IVok } from "@/interfaces/Vok";
-import styled from "styled-components";
+import { IPaginateVok, IVok } from "@/interfaces/Vok";
 import { useUser } from "@auth0/nextjs-auth0";
-// import { FaTrash, FaEdit } from "react-icons/fa";
-// import Link from "next/link";
 import Card from "@/components/Card";
-// import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { resPerPage } from "../config";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { StyledGrid, StyledPagination } from "pages";
+import Link from "next/link";
 
-export default function Home() {
-  const { data, error } = useSWR("/api/voks/favorite");
-  // console.log(data, error);
+export default function Favorite() {
   const { user } = useUser();
-  // console.log(user);
+  const router = useRouter();
+  const { page } = router.query;
+  const { data, error } = useSWR(
+    page ? `/api/voks/favorite/?page=${page}` : `/api/voks/favorite/?page=1`
+  ) as {
+    data: IPaginateVok;
+    error: any;
+  };
 
-  if (error) return <Layout>Es gab ein Fehler</Layout>;
-  if (!data) return <Layout>Lädt ...</Layout>;
+  //total pages, lastpage, prev page, nextpage
+  const totalPages = Math.ceil(data?.vokCount / resPerPage);
+  const firstPage = Number(page) === 1;
+  const lastPage = Number(page) === totalPages;
+  const prevPage = `/favorite/?page=${Number(page) - 1}`;
+  const nextPage = `/favorite/?page=${Number(page) + 1}`;
+  // console.log(totalPages, firstPage, lastPage, prevPage, nextPage);
 
-  if (user && data.length === 0) {
-    return <Layout>Es gibt noch keine Vokabeln</Layout>;
+  //handle pagination
+  const handlePagination = (page: number) => {
+    router.push(`/favorite/?page=${page}`);
+  };
+
+  useEffect(() => {
+    router.push("/favorite/?page=1");
+  }, []);
+
+  if (error)
+    return <Layout title="VokApp | Favoriten">Es gab ein Fehler</Layout>;
+  if (!data) return <Layout title="VokApp | Favoriten">Lädt ...</Layout>;
+
+  if (user && data.vokCount === 0) {
+    return (
+      <Layout title="VokApp | Favoriten">
+        Du hast noch keine Favoriten. <Link href="/">Hier klicken</Link> um
+        zurück zugehen
+      </Layout>
+    );
   }
   if (user) {
     return (
-      <Layout>
+      <Layout title="VokApp | Favoriten">
         <StyledGrid>
-          {data.length > 0 &&
-            data.map((vok: IVok) => {
+          {data.vokCount > 0 &&
+            data.voks.map((vok: IVok) => {
               return (
                 <Card
                   key={vok._id}
@@ -38,19 +66,48 @@ export default function Home() {
               );
             })}
         </StyledGrid>
+        {totalPages > 1 && (
+          <StyledPagination>
+            {!firstPage && (
+              <button
+                onClick={() => {
+                  router.push(prevPage);
+                }}
+              >
+                ◀️
+              </button>
+            )}
+
+            {Array.from({ length: totalPages }, (_, index) => {
+              return (
+                <>
+                  <button
+                    //@ts-expect-error
+                    className={page == index + 1 ? "active" : ""}
+                    onClick={() => {
+                      handlePagination(index + 1);
+                      // console.log({ page: page, number: index + 1 });
+                    }}
+                    key={index + 1}
+                  >
+                    {index + 1}
+                  </button>
+                </>
+              );
+            })}
+            {!lastPage && (
+              <button
+                onClick={() => {
+                  router.push(nextPage);
+                }}
+              >
+                ▶️
+              </button>
+            )}
+          </StyledPagination>
+        )}
       </Layout>
     );
   }
   return <Layout>Willkommen um neue Vokabeln einzufügen bitte anmelden</Layout>;
 }
-const StyledGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 0rem;
-  }
-`;
-
-// export const getServerSideProps = withPageAuthRequired();
