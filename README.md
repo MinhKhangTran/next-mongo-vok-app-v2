@@ -64,7 +64,7 @@ User goes to the homepage:
 6. User can comment other vocabularies/ Rate other vocabularies based on difficulty
 7. User can mark them as favorite ✅
 8. User can search for vocabularies ~~and filter~~ ✅
-9. Pagination
+9. Pagination✅
 10. Do some SEO Stuffs and 404 page
 11. Lauch on Vercel ✅
     - add db into next.config.js ✅
